@@ -1,0 +1,22 @@
+{
+  "name": "z-to-do",
+  "version": "1.0.0",
+  "description": "Aplicativo To Do List com Tailwind CSS",
+  "main": "index.html",
+  "scripts": {
+    "dev": "live-server --port=3000",
+    "build": "tailwindcss -i ./styles.css -o ./dist/output.css --minify"
+  },
+  "keywords": [
+    "todo",
+    "tailwind",
+    "javascript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "tailwindcss": "^3.4.0"
+  }
+}
+

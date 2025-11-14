@@ -1,0 +1,167 @@
+/* Estilos customizados para o To Do List */
+
+/* Paleta de cores */
+:root {
+    --color-primary: #ece202;
+    --color-secondary: #ff7a00;
+    --color-dark: #191c21;
+}
+
+/* Background do body */
+.custom-bg {
+    background: linear-gradient(135deg, #fff9e6 0%, #ffe6cc 100%);
+}
+
+/* Header e Footer */
+.header-bg {
+    background-color: #191c21;
+}
+
+/* Botão primário */
+.custom-btn-primary {
+    background-color: #ece202;
+}
+
+.custom-btn-primary:hover,
+.custom-btn-hover {
+    background-color: #ff7a00;
+}
+
+/* Foco do input */
+.custom-focus:focus {
+    border-color: #ece202;
+    box-shadow: 0 0 0 3px rgba(236, 226, 2, 0.2);
+}
+
+/* Filtros */
+.filter-btn {
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
+
+.filter-btn:hover {
+    background-color: #e5e7eb;
+    color: #4b5563;
+}
+
+.filter-btn.active {
+    background-color: #ece202;
+    color: #191c21;
+    font-weight: 600;
+}
+
+/* Animação para tarefas */
+.todo-item {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilo para tarefas concluídas */
+.todo-completed {
+    opacity: 0.6;
+}
+
+.todo-completed .todo-text {
+    text-decoration: line-through;
+    color: #9ca3af;
+}
+
+/* Estilo de foco melhorado */
+input:focus,
+button:focus {
+    outline: none;
+}
+
+/* Checkbox quando completado */
+.custom-checkbox-completed {
+    background-color: #ece202;
+    border-color: #ece202;
+}
+
+.custom-checkbox-completed:hover {
+    background-color: #ff7a00;
+    border-color: #ff7a00;
+}
+
+.text-dark-check {
+    color: #191c21;
+}
+
+/* Scrollbar customizada */
+#todoList::-webkit-scrollbar {
+    width: 8px;
+}
+
+#todoList::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+#todoList::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+#todoList::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Botões de Prioridade */
+.priority-btn {
+    background-color: #f3f4f6;
+    color: #6b7280;
+    border: 2px solid transparent;
+}
+
+.priority-btn:hover {
+    background-color: #e5e7eb;
+    transform: scale(1.1);
+}
+
+.priority-btn.active {
+    border-color: currentColor;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.priority-simple {
+    color: #10b981;
+}
+
+.priority-simple.active {
+    background-color: #d1fae5;
+    color: #059669;
+}
+
+.priority-medium {
+    color: #f59e0b;
+}
+
+.priority-medium.active {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.priority-urgent {
+    color: #ef4444;
+}
+
+.priority-urgent.active {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+/* Bandeira de prioridade nas tarefas */
+.priority-flag {
+    cursor: pointer;
+}
+
