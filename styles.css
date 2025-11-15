@@ -7,9 +7,54 @@
     --color-dark: #191c21;
 }
 
-/* Background do body */
+/* Background do body - Tema de notas e tarefas */
 .custom-bg {
-    background: linear-gradient(135deg, #fff9e6 0%, #ffe6cc 100%);
+    background: 
+        /* Textura de papel */
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.03) 2px,
+            rgba(0, 0, 0, 0.03) 4px
+        ),
+        /* Linhas horizontais sutis como caderno */
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 24px,
+            rgba(236, 226, 2, 0.1) 24px,
+            rgba(236, 226, 2, 0.1) 25px
+        ),
+        /* Gradiente base suave */
+        linear-gradient(135deg, #fef9e7 0%, #fff4e0 50%, #ffe8d1 100%);
+    background-attachment: fixed;
+    position: relative;
+}
+
+/* Padrão decorativo de notas adesivas */
+.custom-bg::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        /* Nota adesiva amarela decorativa */
+        radial-gradient(circle at 15% 20%, rgba(236, 226, 2, 0.15) 0%, transparent 50%),
+        /* Nota adesiva laranja decorativa */
+        radial-gradient(circle at 85% 60%, rgba(255, 122, 0, 0.12) 0%, transparent 50%),
+        /* Nota adesiva amarela decorativa */
+        radial-gradient(circle at 50% 80%, rgba(236, 226, 2, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Garantir que o conteúdo fique acima do fundo decorativo */
+body > * {
+    position: relative;
+    z-index: 1;
 }
 
 /* Header e Footer */
@@ -33,15 +78,72 @@
     box-shadow: 0 0 0 3px rgba(236, 226, 2, 0.2);
 }
 
+/* Contadores de caracteres dentro dos campos */
+#charCount, #descCount {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2px 4px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+/* Garantir que os contadores fiquem visíveis mesmo com texto digitado */
+input:focus ~ #charCount,
+textarea:focus ~ #descCount {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Botões de dia da semana */
+.day-btn {
+    background-color: #f3f4f6;
+    color: #6b7280;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.day-btn:hover {
+    background-color: rgba(236, 226, 2, 0.2);
+    color: #191c21;
+    border-color: rgba(236, 226, 2, 0.5);
+    transform: translateY(-1px);
+}
+
+.day-btn.active {
+    background-color: #ece202;
+    color: #191c21;
+    font-weight: 600;
+    border-color: #ff7a00;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Badges de dia e data nas tarefas */
+.todo-day {
+    display: inline-block;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.todo-date {
+    display: inline-block;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
 /* Filtros */
 .filter-btn {
     background-color: #f3f4f6;
     color: #6b7280;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
 }
 
 .filter-btn:hover {
-    background-color: #e5e7eb;
-    color: #4b5563;
+    background-color: rgba(255, 122, 0, 0.15);
+    color: #ff7a00;
+    border-color: rgba(255, 122, 0, 0.3);
 }
 
 .filter-btn.active {
@@ -74,6 +176,24 @@
 .todo-completed .todo-text {
     text-decoration: line-through;
     color: #9ca3af;
+}
+
+/* Estilo para descrição da tarefa */
+.todo-description {
+    line-height: 1.5;
+    opacity: 0.85;
+    font-style: italic;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.todo-item:hover .todo-description {
+    opacity: 1;
+}
+
+.todo-completed .todo-description {
+    opacity: 0.6;
+    text-decoration: none;
 }
 
 /* Estilo de foco melhorado */
@@ -121,11 +241,13 @@ button:focus {
     background-color: #f3f4f6;
     color: #6b7280;
     border: 2px solid transparent;
+    transition: all 0.2s ease;
 }
 
 .priority-btn:hover {
-    background-color: #e5e7eb;
+    background-color: rgba(255, 122, 0, 0.15);
     transform: scale(1.1);
+    border-color: rgba(255, 122, 0, 0.3);
 }
 
 .priority-btn.active {
@@ -163,5 +285,578 @@ button:focus {
 /* Bandeira de prioridade nas tarefas */
 .priority-flag {
     cursor: pointer;
+}
+
+/* Card principal com destaque sobre o fundo */
+.bg-white {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 1px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Card principal com gradiente amarelo-laranja */
+.main-card-bg {
+    background: linear-gradient(135deg, 
+        #FFF9E6 0%, 
+        #FFF4D6 25%, 
+        #FFE8B8 50%, 
+        #FFDB99 75%, 
+        #FFD380 100%);
+    box-shadow: 0 10px 30px rgba(255, 122, 0, 0.15), 0 1px 8px rgba(236, 226, 2, 0.1);
+    border: 1px solid rgba(255, 122, 0, 0.1);
+}
+
+/* Estilo de Post-it para tarefas */
+.post-it {
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    transform: rotate(-0.5deg);
+    transition: all 0.3s ease;
+}
+
+.post-it::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, transparent 50%);
+    border-radius: 0 0 0 100%;
+}
+
+.post-it:hover {
+    transform: rotate(0deg) translateY(-2px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15), 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Post-it Simples (Verde) */
+.post-it-simple {
+    background: linear-gradient(135deg, #d4f4dd 0%, #c8f0d3 100%);
+    border-left: 4px solid #10b981;
+}
+
+.post-it-simple::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, transparent 50%);
+    border-radius: 0 0 100% 0;
+}
+
+/* Post-it Mediana (Amarelo) */
+.post-it-medium {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-left: 4px solid #f59e0b;
+    transform: rotate(0.5deg);
+}
+
+.post-it-medium::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, transparent 50%);
+    border-radius: 0 0 100% 0;
+}
+
+.post-it-medium:hover {
+    transform: rotate(0deg) translateY(-2px);
+}
+
+/* Post-it Urgente (Vermelho) */
+.post-it-urgent {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    border-left: 4px solid #ef4444;
+    transform: rotate(-1deg);
+}
+
+.post-it-urgent::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, transparent 50%);
+    border-radius: 0 0 100% 0;
+}
+
+.post-it-urgent:hover {
+    transform: rotate(0deg) translateY(-2px);
+}
+
+/* Post-it Concluído */
+.post-it-completed {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%) !important;
+    border-left: 4px solid #9ca3af !important;
+    opacity: 0.7;
+    transform: rotate(0deg);
+}
+
+.post-it-completed::after {
+    background: linear-gradient(135deg, rgba(156, 163, 175, 0.2) 0%, transparent 50%);
+}
+
+.post-it-completed:hover {
+    transform: translateY(-2px);
+}
+
+/* Responsividade - Mobile e Tablet */
+@media (max-width: 640px) {
+    /* Ajustes para smartphones */
+    .custom-bg {
+        background-attachment: scroll; /* Melhor performance em mobile */
+    }
+    
+    /* Ajustar espaçamento das linhas do caderno em mobile */
+    .custom-bg {
+        background: 
+            repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.02) 2px,
+                rgba(0, 0, 0, 0.02) 4px
+            ),
+            repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 20px,
+                rgba(236, 226, 2, 0.08) 20px,
+                rgba(236, 226, 2, 0.08) 21px
+            ),
+            linear-gradient(135deg, #fef9e7 0%, #fff4e0 50%, #ffe8d1 100%);
+    }
+    
+    /* Tarefas em mobile */
+    .todo-item {
+        font-size: 0.875rem;
+    }
+    
+    /* Botões de prioridade menores em mobile */
+    .priority-btn {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .priority-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+/* Estilos para a Modal de Todas as Tarefas - Visual de Prancheta */
+.all-todos-modal {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background: linear-gradient(135deg, #e8e3d3 0%, #d4c9b0 50%, #c9b89a 100%);
+}
+
+.all-todos-modal.hidden {
+    display: none;
+}
+
+.all-todos-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 40;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.all-todos-container {
+    position: relative;
+    z-index: 50;
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem 0.5rem;
+}
+
+.all-todos-content {
+    background: 
+        /* Textura de madeira */
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(139, 115, 85, 0.1) 2px,
+            rgba(139, 115, 85, 0.1) 4px
+        ),
+        /* Gradiente base marrom claro (madeira) */
+        linear-gradient(135deg, #d4b896 0%, #c9a882 50%, #b8956a 100%);
+    border: 8px solid #8b7555;
+    border-radius: 0.5rem;
+    box-shadow: 
+        /* Sombra da prancheta */
+        0 25px 50px -12px rgba(0, 0, 0, 0.4),
+        /* Sombra interna */
+        inset 0 2px 4px rgba(0, 0, 0, 0.1),
+        /* Brilho superior */
+        inset 0 -2px 4px rgba(255, 255, 255, 0.2);
+    animation: slideDown 0.3s ease-out;
+    max-height: calc(100vh - 2rem);
+    min-height: calc(100vh - 2rem);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    padding: 1.5rem;
+    padding-top: 3rem;
+}
+
+/* Clipe superior da prancheta */
+.all-todos-content::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 20px;
+    background: linear-gradient(135deg, #6b5d4f 0%, #8b7555 50%, #6b5d4f 100%);
+    border-radius: 4px;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+/* Área de papel dentro da prancheta */
+.clipboard-paper {
+    background-color: #faf9f6;
+    border-radius: 0.25rem;
+    padding: 1.5rem;
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.05),
+        0 1px 2px rgba(0, 0, 0, 0.1);
+    margin-top: -1.5rem;
+    position: relative;
+    z-index: 2;
+    min-height: calc(100vh - 6rem);
+}
+
+/* Linhas de caderno na área de papel */
+.clipboard-paper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 3rem;
+    right: 0;
+    bottom: 0;
+    background-image: repeating-linear-gradient(
+        transparent,
+        transparent 1.5rem,
+        rgba(0, 0, 0, 0.03) 1.5rem,
+        rgba(0, 0, 0, 0.03) calc(1.5rem + 1px)
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Margem vermelha no papel */
+.clipboard-paper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 2rem;
+    width: 2px;
+    bottom: 0;
+    background-color: #ef4444;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Garantir que o conteúdo apareça sobre as linhas */
+.clipboard-paper > * {
+    position: relative;
+    z-index: 10;
+}
+
+/* Filtros da modal */
+.all-todos-filter-btn {
+    background-color: #f3f4f6;
+    color: #6b7280;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.all-todos-filter-btn:hover {
+    background-color: rgba(255, 122, 0, 0.15);
+    color: #ff7a00;
+    border-color: rgba(255, 122, 0, 0.3);
+}
+
+.all-todos-filter-btn.active {
+    background-color: #ece202;
+    color: #191c21;
+    font-weight: 600;
+    border-color: #ff7a00;
+}
+
+/* Scrollbar customizada para a lista de todas as tarefas */
+#allTodosList::-webkit-scrollbar {
+    width: 8px;
+}
+
+#allTodosList::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+#allTodosList::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+#allTodosList::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Responsividade para a modal */
+@media (max-width: 640px) {
+    .all-todos-modal {
+        padding-top: 0;
+        padding-bottom: 0;
+        background: linear-gradient(135deg, #d4c9b0 0%, #c9b89a 100%);
+    }
+    
+    .all-todos-container {
+        padding: 0.5rem;
+    }
+    
+    .all-todos-content {
+        border-radius: 0;
+        max-height: 100vh;
+        min-height: 100vh;
+        padding: 1rem;
+        padding-top: 2.5rem;
+        border: 4px solid #8b7555;
+    }
+    
+    .all-todos-content::before {
+        width: 120px;
+        height: 16px;
+        top: -8px;
+    }
+    
+    .clipboard-paper {
+        padding: 1rem;
+        margin-top: -1rem;
+        min-height: calc(100vh - 4rem);
+    }
+    
+    .clipboard-paper::before {
+        left: 2.5rem;
+    }
+    
+    .clipboard-paper::after {
+        left: 1.5rem;
+    }
+}
+
+/* Telas grandes - modal ainda maior */
+@media (min-width: 1280px) {
+    .all-todos-content {
+        max-width: 1700px !important;
+    }
+}
+
+@media (min-width: 1536px) {
+    .all-todos-content {
+        max-width: 1900px !important;
+    }
+}
+
+/* Toast de Notificação */
+.toast-notification {
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.toast-notification.toast-show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast-notification.hidden {
+    display: none;
+}
+
+/* Responsividade para o toast */
+@media (max-width: 640px) {
+    .toast-notification {
+        top: 1rem;
+        right: 1rem;
+        left: 1rem;
+        min-width: auto;
+        max-width: none;
+        transform: translateY(-100px);
+    }
+    
+    .toast-notification.toast-show {
+        transform: translateY(0);
+    }
+}
+
+/* Post-its Mini (tamanho real) */
+.post-it-mini-wrapper {
+    width: 100%;
+}
+
+.post-it-mini {
+    width: 100%;
+    min-height: 128px;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.1);
+    transform: rotate(var(--rotation, 0deg));
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Aplicar cores dos post-its originais aos mini */
+.post-it-mini.post-it-simple {
+    background: linear-gradient(135deg, #d4f4dd 0%, #c8f0d3 100%);
+    border-left: 3px solid #10b981;
+}
+
+.post-it-mini.post-it-medium {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-left: 3px solid #f59e0b;
+}
+
+.post-it-mini.post-it-urgent {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    border-left: 3px solid #ef4444;
+}
+
+.post-it-mini.post-it-completed {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%) !important;
+    border-left: 3px solid #9ca3af !important;
+    opacity: 0.7;
+}
+
+.post-it-mini:nth-child(5n+1) {
+    --rotation: -1.5deg;
+}
+
+.post-it-mini:nth-child(5n+2) {
+    --rotation: 0.5deg;
+}
+
+.post-it-mini:nth-child(5n+3) {
+    --rotation: -0.8deg;
+}
+
+.post-it-mini:nth-child(5n+4) {
+    --rotation: 1.2deg;
+}
+
+.post-it-mini:nth-child(5n+5) {
+    --rotation: -0.5deg;
+}
+
+.post-it-mini:hover {
+    transform: rotate(0deg) translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15);
+    z-index: 20;
+}
+
+/* Modal de Detalhes do Post-it */
+.post-it-detail-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-it-detail-modal.hidden {
+    display: none;
+}
+
+.post-it-detail-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 59;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.post-it-detail-container {
+    position: relative;
+    z-index: 60;
+    width: 100%;
+}
+
+.post-it-detail-content {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.post-it-detail-content.post-it-detail-show {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.post-it-detail {
+    position: relative;
+}
+
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Responsividade para post-its mini */
+@media (max-width: 640px) {
+    #allTodosList {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .post-it-mini {
+        min-height: 120px;
+    }
 }
 
